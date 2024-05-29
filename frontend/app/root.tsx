@@ -1,6 +1,7 @@
 import type { LinksFunction } from '@remix-run/node';
 import stylesheet from './tailwind.css?url';
 import {
+  Link,
   Links,
   Meta,
   Outlet,
@@ -22,7 +23,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div className='mx-auto max-w-7xl px-6 lg:px-8 py-16'>
+          <div className='mx-auto max-w-2xl lg:mx-0'>
+            <h3 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              <Link to={`/`}>Larevent</Link>
+            </h3>
+            <p className='mt-2 text-lg leading-8 text-gray-600'>
+              Transforming events, connecting people
+            </p>
+          </div>
+          <div className='border-t border-slate-400 my-6 py-6'>{children}</div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
