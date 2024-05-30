@@ -1,12 +1,5 @@
 import { Link } from '@remix-run/react';
-
-type EventCardProps = {
-  id: number;
-  name: string;
-  description: string;
-  start_time: string;
-  end_time: string;
-};
+import { TEvent } from '../types';
 
 const EventCard = ({
   id,
@@ -14,7 +7,7 @@ const EventCard = ({
   description,
   start_time,
   end_time,
-}: EventCardProps): JSX.Element => {
+}: TEvent): JSX.Element => {
   return (
     <article className='flex max-w-xl rounded bg-slate-900 text-white px-4 py-6 flex-col items-start justify-between'>
       <Link to={`events/${id}`}>
