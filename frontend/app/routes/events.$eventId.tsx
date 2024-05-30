@@ -1,21 +1,19 @@
-import type { LoaderFunctionArgs } from '@remix-run/node';
+import { json, type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import { getEvent } from '../data.server';
+import invariant from 'tiny-invariant';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  try {
-    console.log(params.eventId);
-    const res = await fetch(
-      `http://127.0.0.1:8000/api/events/${params.eventId}`
-    );
-    const event = await res.json();
-    return event.data;
-  } catch (error) {
-    console.error(error);
+  invariant(params.eventId, 'Missing eventId param');
+  const event = await getEvent(params.eventId);
+  if (!event) {
+    throw new Response('Not Found', { status: 404 });
   }
+  return json({ event });
 };
 
 const Event = (): JSX.Element => {
-  const event = useLoaderData<typeof loader>();
+  const { event } = useLoaderData<typeof loader>();
   return (
     <div className='space-y-4'>
       <div>
